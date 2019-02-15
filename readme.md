@@ -1,0 +1,1 @@
+To start serving app run: `npm start`
