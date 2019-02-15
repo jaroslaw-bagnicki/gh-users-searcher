@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { UserList } from './components/UserList';
+import * as ghService from './service';
 
 export class App extends Component {
   state = {
     searchText: '',
-    users: []
+    users: [],
+    totalUsers: 0
   };
 
   render() {
+    const { users, totalUsers} = this.state;
     return (
       <div>
         <form onSubmit={this.handleFormSubmit}>
@@ -18,7 +21,7 @@ export class App extends Component {
             onChange={this.handleInputChange}
             value={this.state.searchText} />
         </form>
-        <UserList users={this.state.users} />
+        <UserList users={users} totalUsers={totalUsers} />
       </div>
     );
   }
@@ -30,8 +33,15 @@ export class App extends Component {
     });
   }
 
-  handleFormSubmit = (e) => {
-    e.preventDefault();
+  handleFormSubmit = async (e) => {
     console.log('handleFormSubmit()');
+    e.preventDefault();
+    const res = await ghService.searchUserByName(this.state.searchText);
+    const users = res.items;
+    const totalUsers = res['total_count'];
+    this.setState({
+      users,
+      totalUsers
+    });
   }
 }
