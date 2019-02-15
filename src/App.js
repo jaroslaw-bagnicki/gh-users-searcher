@@ -7,11 +7,12 @@ export class App extends Component {
   state = {
     searchText: '',
     users: [],
-    totalUsers: 0
+    totalUsers: 0,
+    isIdle: true
   };
 
   render() {
-    const { users, totalUsers, searchText } = this.state;
+    const { searchText, users, totalUsers, isIdle } = this.state;
     return (
       <div className={styles.container}>
         <header className={styles.header}>
@@ -38,7 +39,7 @@ export class App extends Component {
           </form>
         </header>
 
-        <UserList users={users} totalUsers={totalUsers} />
+        <UserList users={users} totalUsers={totalUsers} isIdle={isIdle} />
       </div>
     );
   }
@@ -56,7 +57,8 @@ export class App extends Component {
     const totalUsers = res['total_count'];
     this.setState({
       users,
-      totalUsers
+      totalUsers,
+      isIdle: false
     });
   }
 
@@ -65,7 +67,8 @@ export class App extends Component {
     this.setState({
       searchText: '',
       users: [],
-      totalUsers: 0
+      totalUsers: 0,
+      isIdle: true
     });
   }
 }
