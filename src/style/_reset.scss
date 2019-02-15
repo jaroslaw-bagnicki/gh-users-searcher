@@ -48,7 +48,8 @@ table {
 }
 
 // Input reset
-input {
+input,
+button {
   margin:0;
 	border:0;
 	padding:0;
@@ -62,6 +63,7 @@ input {
 	color: inherit;
 }
 
-input:focus {
+input:focus,
+button:focus {
 	outline: 0;
 }

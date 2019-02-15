@@ -11,19 +11,30 @@ export class App extends Component {
   };
 
   render() {
-    const { users, totalUsers} = this.state;
+    const { users, totalUsers, searchText } = this.state;
     return (
       <div className={styles.container}>
         <header className={styles.header}>
           <h2 className={styles.title}>GitHub users searcher</h2>
           <form onSubmit={this.handleFormSubmit} className={styles.form}>
-            <label htmlFor="search" className={styles.searchLabel}><i className="fas fa-search"></i></label>
+            <button 
+              type="submit"
+              onClick={this.handleFormSubmit}
+              className={styles.submitBtn}
+              disabled={(searchText === '')}
+            ><i className="fas fa-search"></i></button>
             <input
               type="text"
               id="search"
               onChange={this.handleInputChange}
               value={this.state.searchText}
               className={styles.searchInput} />
+            <button 
+              type="reset" 
+              onClick={this.handleFormReset} 
+              className={styles.resetBtn} 
+              disabled={(searchText === '')}
+            ><i className="fas fa-times"></i></button>
           </form>
         </header>
 
@@ -33,14 +44,12 @@ export class App extends Component {
   }
 
   handleInputChange = (e) => {
-    console.log('handleInputChange()');
     this.setState({
       searchText: e.target.value
     });
   }
 
   handleFormSubmit = async (e) => {
-    console.log('handleFormSubmit()');
     e.preventDefault();
     const res = await ghService.searchUserByName(this.state.searchText);
     const users = res.items;
@@ -48,6 +57,15 @@ export class App extends Component {
     this.setState({
       users,
       totalUsers
+    });
+  }
+
+  handleFormReset = () => {
+    console.log('handleFormClear()');
+    this.setState({
+      searchText: '',
+      users: [],
+      totalUsers: 0
     });
   }
 }
