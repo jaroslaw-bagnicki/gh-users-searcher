@@ -1,0 +1,28 @@
+.container {
+  font-display: flex;
+  align-items: center;
+}
+
+.pagesInfo {
+  display: inline-block;
+  min-width: 4rem;
+  text-align: center;
+}
+
+.button {
+  height: 1.5rem;
+  width: 2.25em;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: .3s;
+
+  &:not([disabled]):hover {
+    background-color: rgba(125, 125, 125, .2)
+  }
+
+  &[disabled] {
+    opacity: 0.3;
+    cursor: unset;
+  }
+
+}
