@@ -33,14 +33,16 @@ export class  UserList extends Component {
     return isIdle ? 
       <div className={styles.container}>Type user name ...</div>
       : 
-      isLoading ?
-        <span className={styles.loader}>
-          <i className="fas fa-circle-notch fa-spin"></i>
-        </span>
-        :
-        <div className={styles.container}>
-          <h3 className={styles.title}>Found {totalUsers} users</h3>
-          {this.renderPagination()}
+      <div className={styles.container}>
+        <h3 className={styles.title}>
+          {!isLoading && `Found ${totalUsers} users`}
+        </h3>
+        {this.renderPagination()}
+        {isLoading ?
+          <span className={styles.loader}>
+            <i className="fas fa-circle-notch fa-spin"></i>
+          </span>
+          :
           <ul className={styles.usersList}>
             {users.map(user => (
               <li key={user.id}>
@@ -48,8 +50,9 @@ export class  UserList extends Component {
               </li>
             ))}
           </ul>
-          {this.renderPagination()}
-        </div>
+        }
+        {this.renderPagination()}
+      </div>
     ;
   }
 
