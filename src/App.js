@@ -40,17 +40,10 @@ export class App extends Component {
 
   handleInputChange = (e) => {
     const inputVal = e.target.value;
-    if (inputVal.length > 2) {
-      this.setState({
-        searchText: inputVal,
-        isIdle: false
-      });
-    } else {
-      this.setState({
-        searchText: inputVal,
-        isIdle: true
-      });
-    }
+    this.setState({
+      searchText: inputVal,
+      isIdle: false
+    });
   }
 
   handleInputReset = () => {

@@ -20,7 +20,7 @@ export class  UserList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if ((this.props.searchText !== prevProps.searchText) && (this.props.searchText.length > 2)) {
+    if (this.props.searchText !== prevProps.searchText) {
       this.fetchUsers();
     }
   }
@@ -30,9 +30,7 @@ export class  UserList extends Component {
     const { users, totalUsers } = this.state;
     
     return isIdle ? 
-      <div className={styles.container}>
-        Type user name (at least 3 chars)
-      </div>
+      <div className={styles.container}>Type user name ...</div>
       : 
       <div className={styles.container}>
         <h3 className={styles.title}>Found {totalUsers} users</h3>
@@ -55,9 +53,11 @@ export class  UserList extends Component {
       return (<Pagination currPage={currPage} totalPages={totalPages} fetchUsers={this.fetchUsers} />);
   }
 
-  fetchUsers = async (page = 1) => {
+  fetchUsers = async (debouced = true, page = 1) => {
     try {
-      const res = await ghService.searchUserByName(this.props.searchText, page);
+      const res = debouced ? 
+        await ghService.debouncedSearchUser(this.props.searchText, page) : 
+        await ghService.searchUser(this.props.searchText, page);
       if (res === undefined) throw Error('API calls limit reached.');
       const users = res.items;
       const totalUsers = res['total_count'];
