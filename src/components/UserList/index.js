@@ -13,6 +13,7 @@ export class  UserList extends Component {
   }
 
   state = {
+    isLoading: false,
     users: [],
     totalUsers: null,
     currPage: null,
@@ -27,23 +28,28 @@ export class  UserList extends Component {
 
   render() {
     const { isIdle } = this.props;
-    const { users, totalUsers } = this.state;
+    const { isLoading, users, totalUsers } = this.state;
     
     return isIdle ? 
       <div className={styles.container}>Type user name ...</div>
       : 
-      <div className={styles.container}>
-        <h3 className={styles.title}>Found {totalUsers} users</h3>
-        {this.renderPagination()}
-        <ul className={styles.usersList}>
-          {users.map(user => (
-            <li key={user.id}>
-              <User user={user} />
-            </li>
-          ))}
-        </ul>
-        {this.renderPagination()}
-      </div>
+      isLoading ?
+        <span className={styles.loader}>
+          <i className="fas fa-circle-notch fa-spin"></i>
+        </span>
+        :
+        <div className={styles.container}>
+          <h3 className={styles.title}>Found {totalUsers} users</h3>
+          {this.renderPagination()}
+          <ul className={styles.usersList}>
+            {users.map(user => (
+              <li key={user.id}>
+                <User user={user} />
+              </li>
+            ))}
+          </ul>
+          {this.renderPagination()}
+        </div>
     ;
   }
 
@@ -55,6 +61,7 @@ export class  UserList extends Component {
 
   fetchUsers = async (debouced = true, page = 1) => {
     try {
+      this.setState({isLoading: true});
       const res = debouced ? 
         await ghService.debouncedSearchUser(this.props.searchText, page) : 
         await ghService.searchUser(this.props.searchText, page);
@@ -64,6 +71,7 @@ export class  UserList extends Component {
       const totalPages = Math.ceil( totalUsers / users.length);
       this.setState({
         isIdle: false,
+        isLoading: false,
         users,
         totalUsers,
         currPage: page,
