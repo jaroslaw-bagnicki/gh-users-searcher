@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates');
+@import url('https://use.fontawesome.com/releases/v5.7.2/css/all.css');
+
+/* Box model setup to border-box */
+html {
+  box-sizing: border-box;
+}
+
+*, 
+*:before, 
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: #dfe6e9;
+  color: #2d3436;
+}
+
+#app {
+  min-height: 100vh;
+  padding: 2rem;
+}

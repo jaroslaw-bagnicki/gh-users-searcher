@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { UserList } from './components/UserList';
 import * as ghService from './service';
+import styles from './App.styles.module.scss';
 
 export class App extends Component {
   state = {
@@ -12,15 +13,20 @@ export class App extends Component {
   render() {
     const { users, totalUsers} = this.state;
     return (
-      <div>
-        <form onSubmit={this.handleFormSubmit}>
-          <label htmlFor="search">Search by user name</label>
-          <input
-            type="search"
-            id="search"
-            onChange={this.handleInputChange}
-            value={this.state.searchText} />
-        </form>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <h2 className={styles.title}>GitHub users searcher</h2>
+          <form onSubmit={this.handleFormSubmit} className={styles.form}>
+            <label htmlFor="search" className={styles.searchLabel}><i className="fas fa-search"></i></label>
+            <input
+              type="text"
+              id="search"
+              onChange={this.handleInputChange}
+              value={this.state.searchText}
+              className={styles.searchInput} />
+          </form>
+        </header>
+
         <UserList users={users} totalUsers={totalUsers} />
       </div>
     );

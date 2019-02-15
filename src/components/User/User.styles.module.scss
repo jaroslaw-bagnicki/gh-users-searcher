@@ -1,0 +1,38 @@
+$avatarSize: 6rem;
+
+.container {
+  margin: .5rem 0;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  transition: .2s;
+
+  &:hover {
+    background-color: rgba(124, 124, 124, .1);
+  }
+}
+
+.avatar {
+  height: $avatarSize;
+  width: $avatarSize;
+  margin: 1rem;
+  object-fit: contain;
+  border-radius: 99px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.link {
+  display: inline-block;
+  margin-right: 1rem;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #4e5b5e;
+  text-decoration-color: transparent;
+  transition: .3s;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

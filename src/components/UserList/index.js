@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styles from './UserList.styles.module.scss';
 
 import { User } from '../User';
 
@@ -12,9 +13,9 @@ export class  UserList extends Component {
   render() {
     const { users, totalUsers } = this.props;
     return (
-      <div>
-        <p>Found {totalUsers} users</p>
-        <ul>
+      <div className={styles.container}>
+        <h3 className={styles.title}>Found {totalUsers} users</h3>
+        <ul className={styles.usersList}>
           {users.map(user => (
             <li key={user.id}>
               <User user={user} />
