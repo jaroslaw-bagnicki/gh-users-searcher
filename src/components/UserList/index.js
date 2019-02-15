@@ -35,7 +35,7 @@ export class  UserList extends Component {
       : 
       <div className={styles.container}>
         <h3 className={styles.title}>
-          {!isLoading && `Found ${totalUsers} users`}
+          Found {totalUsers} users
         </h3>
         {this.renderPagination()}
         {isLoading ?
