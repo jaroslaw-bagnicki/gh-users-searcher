@@ -1,7 +1,7 @@
 import { GH_API } from './config';
 
-export function searchUserByName(name) {
-  return fetch(GH_API.SEARCH_USER + `?q=${name}`)
+export function searchUserByName(name, page = 1) {
+  return fetch(GH_API.SEARCH_USER + `?q=${name}&page=${page}`)
     .then(res => {
       if (res.ok) {
         return res.json();

@@ -1,29 +1,23 @@
 import React, { Component } from 'react';
 import { UserList } from './components/UserList';
-import * as ghService from './service';
 import styles from './App.styles.module.scss';
 
 export class App extends Component {
   state = {
-    searchText: '',
-    users: [],
-    totalUsers: 0,
-    isIdle: true
+    isIdle: true,
+    searchText: ''
   };
 
   render() {
-    const { searchText, users, totalUsers, isIdle } = this.state;
+    const { isIdle, searchText } = this.state;
     return (
       <div className={styles.container}>
         <header className={styles.header}>
           <h2 className={styles.title}>GitHub users searcher</h2>
-          <form onSubmit={this.handleFormSubmit} className={styles.form}>
-            <button 
-              type="submit"
-              onClick={this.handleFormSubmit}
-              className={styles.submitBtn}
-              disabled={(searchText === '')}
-            ><i className="fas fa-search"></i></button>
+          <div className={styles.searchInputBox}>
+            <label className={styles.searchLabel}>
+              <i className="fas fa-search"></i>
+            </label>
             <input
               type="text"
               id="search"
@@ -32,42 +26,36 @@ export class App extends Component {
               className={styles.searchInput} />
             <button 
               type="reset" 
-              onClick={this.handleFormReset} 
+              onClick={this.handleInputReset} 
               className={styles.resetBtn} 
               disabled={(searchText === '')}
             ><i className="fas fa-times"></i></button>
-          </form>
+          </div>
         </header>
 
-        <UserList users={users} totalUsers={totalUsers} isIdle={isIdle} />
+        <UserList isIdle={isIdle} searchText={searchText}/>
       </div>
     );
   }
 
   handleInputChange = (e) => {
-    this.setState({
-      searchText: e.target.value
-    });
+    const inputVal = e.target.value;
+    if (inputVal.length > 2) {
+      this.setState({
+        searchText: inputVal,
+        isIdle: false
+      });
+    } else {
+      this.setState({
+        searchText: inputVal,
+        isIdle: true
+      });
+    }
   }
 
-  handleFormSubmit = async (e) => {
-    e.preventDefault();
-    const res = await ghService.searchUserByName(this.state.searchText);
-    const users = res.items;
-    const totalUsers = res['total_count'];
-    this.setState({
-      users,
-      totalUsers,
-      isIdle: false
-    });
-  }
-
-  handleFormReset = () => {
-    console.log('handleFormClear()');
+  handleInputReset = () => {
     this.setState({
       searchText: '',
-      users: [],
-      totalUsers: 0,
       isIdle: true
     });
   }

@@ -27,12 +27,12 @@
   text-align: center;
 }
 
-.form {
+.searchInputBox {
   position: relative; 
 }
 
 .searchInput,
-%button {
+%icon {
   height: 2.25rem;
   border-radius: 99px;
 }
@@ -42,7 +42,7 @@
   border: 3px solid #c4ccce;
 }
 
-%button {
+%icon {
   position: absolute;
   top:0;
   display: inline-flex;
@@ -52,24 +52,21 @@
   background-color: #c4ccce;
   color: #576164;
   user-select: none;
-  cursor: pointer;
-
-  &[disabled] {
-    cursor: unset;
-  }
 }
 
-.submitBtn {
-  @extend %button;
+.searchLabel {
+  @extend %icon;
   left: 0;
 }
 
 .resetBtn {
-  @extend %button;
+  @extend %icon;
   right: 0;
+  cursor: pointer;
   transition: .2s;
 
   &[disabled] {
+    cursor: unset;
     opacity: 0;
   }
 }
