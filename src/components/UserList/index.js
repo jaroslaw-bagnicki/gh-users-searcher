@@ -62,15 +62,15 @@ export class  UserList extends Component {
       return (<Pagination currPage={currPage} totalPages={totalPages} fetchUsers={this.fetchUsers} />);
   }
 
-  fetchUsers = async (debouced = true, page = 1) => {
+  fetchUsers = async (debounced = true, page = 1) => {
     try {
       this.setState({isLoading: true});
-      const res = debouced ? 
+      const res = debounced ? 
         await ghService.debouncedSearchUser(this.props.searchText, page) : 
         await ghService.searchUser(this.props.searchText, page);
       if (res === undefined) throw Error('API calls limit reached.');
       const users = res.items;
-      const totalUsers = res['total_count'];
+      const totalUsers = res.total_count;
       const totalPages = Math.ceil( totalUsers / users.length);
       this.setState({
         isIdle: false,
